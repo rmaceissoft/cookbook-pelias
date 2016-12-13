@@ -3,7 +3,7 @@ maintainer       'Mapzen'
 maintainer_email 'grant@mapzen.com'
 license          'GPL'
 description      'Installs/configures Pelias in a vagrant environment. Intended for education and development.'
-version          '0.6.2'
+version          '0.6.3'
 
 
 depends "apt", "2.7.0"
@@ -11,7 +11,9 @@ depends "elasticsearch", "0.3.13"
 depends "java", "1.31.0"
 depends "user"
 depends "runit", "1.5.18"
+depends "nginx", "= 2.1.0"
 depends "nodejs", "2.4.0"
+depends "ohai", "< 4.0.0"
 
 %w(ubuntu).each do |os|
   supports os
