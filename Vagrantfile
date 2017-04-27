@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure('2') do |config|
-  config.omnibus.chef_version = :latest
+  config.omnibus.chef_version = '12.11.18'
   config.vm.hostname          = 'pelias'
 
   if ENV['PELIAS_AWS']

@@ -8,7 +8,7 @@ include_recipe 'apt::default'
 include_recipe 'java::default'
 include_recipe 'nodejs::nodejs_from_binary'
 include_recipe 'elasticsearch::default'
-include_recipe 'elasticsearch::plugins'
+# include_recipe 'elasticsearch::plugins'
 
 package 'git'
 package 'build-essential'
