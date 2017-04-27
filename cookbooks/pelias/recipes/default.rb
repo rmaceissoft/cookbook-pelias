@@ -10,7 +10,6 @@
   schema
   openaddresses
   geonames
-  quattroshapes
   osm
   gtfs
   nginx
