@@ -21,8 +21,7 @@ Vagrant.configure('2') do |config|
       override.ssh.private_key_path = ENV['PELIAS_AWS_PRIVATE_KEY_PATH']  || '~/.ssh/id_rsa'
     end
   else
-    config.vm.box     = 'ubuntu-14.04-opscode'
-    config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
+    config.vm.box = 'opscode/ubuntu-16.04'
   end
 
   config.vm.provider 'virtualbox' do |v|

@@ -8,10 +8,16 @@ include_recipe 'apt::default'
 include_recipe 'java::default'
 include_recipe 'nodejs::nodejs_from_binary'
 include_recipe 'elasticsearch::default'
-# include_recipe 'elasticsearch::plugins'
+# elastic search plugins required by pelias
+elasticsearch_plugin 'analysis-icu' do
+  action :install
+end
+
 
 package 'git'
 package 'build-essential'
+package 'htop'
+package 'vim'
 
 # need to start ES after the initial installation
 execute 'service elasticsearch start' do
