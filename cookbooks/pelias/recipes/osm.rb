@@ -11,11 +11,11 @@ deploy "#{node[:pelias][:basedir]}/osm" do
 
   symlink_before_migrate.clear
 
-  notifies :run, 'execute[npm install osm]', :immediately
+  notifies :run, 'execute[osm install]', :immediately
   only_if { node[:pelias][:osm][:index_data] == true }
 end
 
-execute 'npm install osm' do
+execute 'osm install' do
   action  :nothing
   user    node[:pelias][:user][:name]
   command 'npm install'
@@ -23,9 +23,10 @@ execute 'npm install osm' do
   environment('HOME' => node[:pelias][:user][:home])
 end
 
+
 node[:pelias][:osm][:extracts].map do |name, url|
   # fail if someone tries to pull something other than
-  #   a pbf data file
+  # a pbf data file
   data_file = url.split('/').last
   fail if data_file !~ /\.pbf$/
 
@@ -43,30 +44,26 @@ node[:pelias][:osm][:extracts].map do |name, url|
     owner     node[:pelias][:user][:name]
     mode      0644
     backup    false
-    notifies  :write, "log[log osm load #{name}]", :immediately
-    notifies  :run,   "execute[load osm #{name}]", :immediately
+    notifies  :write, "log[osm log load #{name}]", :immediately
+    notifies  :run,   "execute[osm import data #{name}]", :immediately
     only_if   { node[:pelias][:osm][:index_data] == true }
   end
 
-  log "log osm load #{name}" do
+  log "osm log load #{name}" do
     action  :nothing
     message "Beginning load of OSM data into Elasticsearch for #{name}. Log: #{node[:pelias][:basedir]}/logs/osm_#{name}.{out,err}"
   end
 
   # triggered by the data download
-  execute "load osm #{name}" do
+  execute "osm import data #{name}" do
     action  :nothing
     user    node[:pelias][:user][:name]
-    command <<-EOH
-      node index.js \
-        >#{node[:pelias][:basedir]}/logs/osm_#{name}.out \
-        2>#{node[:pelias][:basedir]}/logs/osm_#{name}.err
-    EOH
+    command 'npm start'
     cwd     "#{node[:pelias][:basedir]}/osm/current"
     timeout node[:pelias][:osm][:timeout]
     environment(
-      'HOME'                => node[:pelias][:user][:home],
-      'PELIAS_CONFIG'       => "#{node[:pelias][:cfg_dir]}/#{name}_#{node[:pelias][:cfg_file]}"
+      'HOME' => node[:pelias][:user][:home],
+      'PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{name}_#{node[:pelias][:cfg_file]}"
     )
   end
 end

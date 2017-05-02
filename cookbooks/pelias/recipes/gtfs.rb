@@ -11,11 +11,11 @@ deploy "#{node[:pelias][:basedir]}/gtfs" do
 
   symlink_before_migrate.clear
 
-  notifies :run, 'execute[npm install gtfs]', :immediately
+  notifies :run, 'execute[gtfs install]', :immediately
   only_if { node[:pelias][:gtfs][:index_data] == true }
 end
 
-execute 'npm install gtfs' do
+execute 'gtfs install' do
   action :nothing
   user node[:pelias][:user][:name]
   command 'npm install'

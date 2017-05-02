@@ -23,7 +23,7 @@ default[:pelias][:esclient][:max_sockets]               = 20
 default[:pelias][:api][:port]                           = 3100
 default[:pelias][:api][:deploy_to]                      = "#{node[:pelias][:basedir]}/pelias-api"
 default[:pelias][:api][:repository]                     = 'https://github.com/pelias/api.git'
-default[:pelias][:api][:revision]                       = 'master'
+default[:pelias][:api][:revision]                       = 'production'
 default[:pelias][:api][:restart_wait]                   = 60
 default[:pelias][:api][:shutdown_timeout]               = 30
 
@@ -34,7 +34,7 @@ default[:pelias][:address_deduper][:leveldb]            = "#{node[:pelias][:base
 
 # openaddresses
 default[:pelias][:openaddresses][:repository]           = 'https://github.com/pelias/openaddresses'
-default[:pelias][:openaddresses][:revision]             = 'master'
+default[:pelias][:openaddresses][:revision]             = 'production'
 default[:pelias][:openaddresses][:data_files]           = [] # will load all OA
 default[:pelias][:openaddresses][:full_data_url]        = 'http://data.openaddresses.io/openaddresses-complete.zip'
 default[:pelias][:openaddresses][:data_path]            = 'http://data.openaddresses.io.s3.amazonaws.com'
@@ -47,10 +47,9 @@ default[:pelias][:openaddresses][:timeout]              = 172_800 # 48 hours
 default[:pelias][:geonames][:repository]                = 'https://github.com/pelias/geonames.git'
 default[:pelias][:geonames][:data_dir]                  = "#{node[:pelias][:basedir]}/data/geonames"
 default[:pelias][:geonames][:data_url]                  = 'http://download.geonames.org/export/dump'
-default[:pelias][:geonames][:revision]                  = 'master'
+default[:pelias][:geonames][:revision]                  = 'production'
 default[:pelias][:geonames][:index_data]                = false
-default[:pelias][:geonames][:admin_lookup]              = false
-default[:pelias][:geonames][:alpha2_country_codes]      = %w(GB)
+default[:pelias][:geonames][:country_code]              = 'ALL'
 default[:pelias][:geonames][:timeout]                   = 7200 # 2 hours
 
 # quattroshapes
@@ -65,10 +64,16 @@ default[:pelias][:quattroshapes][:index_data]           = true
 default[:pelias][:quattroshapes][:types]                = %w(admin0 admin1 admin2 local_admin locality neighborhood)
 default[:pelias][:quattroshapes][:timeout]              = 3600 # 1 hour per type
 
+# whosonfirst
+default[:pelias][:whosonfirst][:repository]             = 'https://github.com/pelias/whosonfirst.git'
+default[:pelias][:whosonfirst][:revision]               = 'production'
+default[:pelias][:whosonfirst][:data_dir]               = "#{node[:pelias][:basedir]}/data/whosonfirst"
+default[:pelias][:whosonfirst][:index_data]             = true
+
 # osm
 default[:pelias][:osm][:data_dir]                       = "#{node[:pelias][:basedir]}/data/osm"
 default[:pelias][:osm][:repository]                     = 'https://github.com/pelias/openstreetmap.git'
-default[:pelias][:osm][:revision]                       = 'master'
+default[:pelias][:osm][:revision]                       = 'production'
 default[:pelias][:osm][:index_data]                     = false
 default[:pelias][:osm][:admin_lookup]                   = false
 default[:pelias][:osm][:timeout]                        = 14_400 # 4 hours

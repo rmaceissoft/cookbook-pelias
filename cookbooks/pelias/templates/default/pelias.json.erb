@@ -27,24 +27,29 @@
     "level": "verbose"
   },
   "imports": {
+    "adminLookup": {
+      "enabled": false
+    },
     "openaddresses": {
-      "datapath": "<%= node[:pelias][:openaddresses][:data_dir] %>",
-      "adminLookup": "true"
+      "deduplicate": false,
+      "datapath": "<%= node[:pelias][:openaddresses][:data_dir] %>"
     },
     "geonames": {
       "datapath": "<%= node[:pelias][:geonames][:data_dir] %>",
-      "adminLookup": <%= node[:pelias][:geonames][:admin_lookup] %>
+      "countryCode": "<%= node[:pelias][:geonames][:country_code] %>"
     },
     "quattroshapes": {
       "datapath": "<%= node[:pelias][:quattroshapes][:data_dir] %>",
       "adminLookup": <%= node[:pelias][:quattroshapes][:admin_lookup] %>
+    },
+    "whosonfirst": {
+      "datapath": "<%= node[:pelias][:whosonfirst][:data_dir] %>"
     },
     "openstreetmap": {
       "datapath": "<%= node[:pelias][:osm][:data_dir] %>",
       "adminLookup": <%= node[:pelias][:osm][:admin_lookup] %>,
       "leveldbpath": "<%= node[:pelias][:osm][:leveldb] %>",
       "import": [{
-        "type": { "node": "osmnode", "way": "osmway" },
         "filename": "<%= @osm_data_file %>"
       }]
     },

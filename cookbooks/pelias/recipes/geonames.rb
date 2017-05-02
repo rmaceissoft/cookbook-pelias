@@ -11,48 +11,39 @@ deploy "#{node[:pelias][:basedir]}/geonames" do
 
   symlink_before_migrate.clear
 
-  notifies :run, 'execute[npm install geonames]', :immediately
+  notifies :run, 'execute[geonames install]', :immediately
   only_if { node[:pelias][:geonames][:index_data] == true }
 end
 
-execute 'npm install geonames' do
+execute 'geonames install' do
   action  :nothing
   user    node[:pelias][:user][:name]
   command 'npm install'
   cwd     "#{node[:pelias][:basedir]}/geonames/current"
   environment('HOME' => node[:pelias][:user][:home])
+  notifies :run, 'execute[geonames download data]', :immediately
 end
 
-node[:pelias][:geonames][:alpha2_country_codes].each do |country|
-  remote_file "#{node[:pelias][:geonames][:data_dir]}/#{country}.zip" do
-    action    :create_if_missing
-    source    "#{node[:pelias][:geonames][:data_url]}/#{country}.zip"
-    owner     node[:pelias][:user][:name]
-    mode      0644
-    backup    false
-    notifies  :write, "log[log geonames load for #{country}]", :immediately
-    notifies  :run,   "execute[load geonames for #{country}]", :immediately
-    only_if   { node[:pelias][:geonames][:index_data] == true }
-  end
-
-  log "log geonames load for #{country}" do
-    action  :nothing
-    message "Beginning load of Geonames data into Elasticsearch for #{country}. Log: #{node[:pelias][:basedir]}/logs/geonames_#{country}.{out,err}"
-  end
-
-  execute "load geonames for #{country}" do
-    action  :nothing
-    user    node[:pelias][:user][:name]
-    command <<-EOH
-      ./bin/pelias-geonames -i #{country} \
-        >#{node[:pelias][:basedir]}/logs/geonames_#{country}.out \
-        2>#{node[:pelias][:basedir]}/logs/geonames_#{country}.err
-    EOH
-    cwd     "#{node[:pelias][:basedir]}/geonames/current"
-    timeout node[:pelias][:geonames][:timeout]
-    environment(
-      'HOME' => node[:pelias][:user][:home],
-      'PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{node[:pelias][:cfg_file]}"
-    )
-  end
+execute 'geonames download data' do
+  action  :nothing
+  user    node[:pelias][:user][:name]
+  cwd     "#{node[:pelias][:basedir]}/geonames/current"
+  command "npm run download"
+  environment(
+    'HOME' => node[:pelias][:user][:home],
+    'PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{node[:pelias][:cfg_file]}"
+  )
+  notifies    :run, 'execute[geonames import data]', :immediately
 end
+
+execute 'geonames import data' do
+  action  :nothing
+  user    node[:pelias][:user][:name]
+  cwd     "#{node[:pelias][:basedir]}/geonames/current"
+  command "npm start"
+  environment(
+    'HOME' => node[:pelias][:user][:home],
+    'PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{node[:pelias][:cfg_file]}"
+  )
+end
+

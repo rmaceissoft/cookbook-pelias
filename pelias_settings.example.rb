@@ -24,38 +24,34 @@ Vagrant.configure('2') do |config|
           'create_index' => true
         },
         'openaddresses' => {
-          'index_data' => true,
+          'index_data' => false,
+          'data_path' => 'https://s3.amazonaws.com/data.openaddresses.io/runs/180334/us/ca',
           'data_files' => [
-            'us-ny-nyc'
+            'los_angeles'
           ]
         },
         'geonames' => {
           'index_data' => true,
-          'alpha2_country_codes' => [
-            'GB'
-          ]
+          'country_code' => 'US'
         },
-        'quattroshapes' => {
-          'index_data' => true,
-          'alpha3_country_codes' => [
-            'GBR'
-          ]
+        'whosonfirst' => {
+          'index_data' => false,
         },
         'osm' => {
           'index_data' => true,
           'extracts' => {
-            'london' => 'https://s3.amazonaws.com/metro-extracts.mapzen.com/london_england.osm.pbf'
+            'los_angeles' => 'https://s3.amazonaws.com/metro-extracts.mapzen.com/los-angeles_california.osm.pbf'
           }
         },
         'gtfs' => {
           'index_data' => true,
-          'stops_url' => 'http://<ip_address>/otp/routers/default/index/stops/'
+          'stops_url' => 'http://<domain>/otp/routers/default/index/stops/'
         }
       }
     }
 
     chef.run_list = [
-      'recipe[pelias::default]'
+      'recipe[pelias::gtfs]'
     ]
   end
 end
