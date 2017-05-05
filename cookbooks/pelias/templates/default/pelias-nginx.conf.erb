@@ -23,8 +23,8 @@ server {
 
   # run the certbot
   # certbot-auto certonly --webroot -w /usr/share/nginx/html -d pelias.metroservices.io
-  ssl_certificate     /etc/letsencrypt/live/pelias.metroservices.io/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/pelias.metroservices.io/privkey.pem;
+  # ssl_certificate     /etc/letsencrypt/live/pelias.metroservices.io/fullchain.pem;
+  # ssl_certificate_key /etc/letsencrypt/live/pelias.metroservices.io/privkey.pem;
 
   # safety enhancement to SSL: make sure we actually use a safe cipher
   ssl_prefer_server_ciphers on;
@@ -47,10 +47,9 @@ server {
       proxy_set_header        X-Forwarded-Proto $scheme;
 
       # Fix the “It appears that your reverse proxy set up is broken" error.
-      proxy_pass          http://ibialerts_server;
+      proxy_pass          http://pelias_server;
       proxy_read_timeout  90;
 
-      proxy_redirect      http://pelias_server https://pelias.metroservices.io ;
 
     }
 

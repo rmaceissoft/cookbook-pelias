@@ -22,10 +22,18 @@ default[:pelias][:esclient][:max_sockets]               = 20
 # api
 default[:pelias][:api][:port]                           = 3100
 default[:pelias][:api][:deploy_to]                      = "#{node[:pelias][:basedir]}/pelias-api"
-default[:pelias][:api][:repository]                     = 'https://github.com/pelias/api.git'
+default[:pelias][:api][:repository]                     = 'https://github.com/LACMTA/pelias-api.git'
 default[:pelias][:api][:revision]                       = 'production'
 default[:pelias][:api][:restart_wait]                   = 60
 default[:pelias][:api][:shutdown_timeout]               = 30
+default[:pelias][:api][:text_analyzer]                  = "addressit"
+
+# libpostal
+default[:pelias][:libpostal][:deploy_to]                = "#{node[:pelias][:basedir]}/libpostal"
+default[:pelias][:libpostal][:repository]               = 'https://github.com/openvenues/libpostal.git'
+default[:pelias][:libpostal][:revision]                 = 'v1.0.0'
+default[:pelias][:libpostal][:data_dir]                 = "#{node[:pelias][:basedir]}/data/libpostal"
+
 
 # address-deduper
 default[:pelias][:address_deduper][:repository]         = 'https://github.com/openvenues/address_deduper'

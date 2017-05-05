@@ -19,6 +19,14 @@ package 'build-essential'
 package 'htop'
 package 'vim'
 
+# libpostal prerequisites
+package 'curl'
+package 'autoconf'
+package 'automake'
+package 'libtool'
+package 'pkg-config'
+
+
 # need to start ES after the initial installation
 execute 'service elasticsearch start' do
   not_if 'pgrep -f elasticsearch'
@@ -68,6 +76,13 @@ end
 
 # address deduper
 directory node[:pelias][:address_deduper][:leveldb] do
+  recursive true
+  owner     node[:pelias][:user][:name]
+  mode      0755
+end
+
+# libpostal
+directory node[:pelias][:libpostal][:data_dir] do
   recursive true
   owner     node[:pelias][:user][:name]
   mode      0755

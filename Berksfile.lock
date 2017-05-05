@@ -35,7 +35,7 @@ GRAPH
     homebrew (>= 0.0.0)
     yum-epel (>= 0.0.0)
   ohai (1.1.12)
-  pelias (0.6.4)
+  pelias (0.6.5)
     apt (~> 2.7.0)
     elasticsearch (= 2.4.1)
     java (= 1.31.0)

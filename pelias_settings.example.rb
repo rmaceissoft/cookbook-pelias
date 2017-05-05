@@ -51,7 +51,7 @@ Vagrant.configure('2') do |config|
     }
 
     chef.run_list = [
-      'recipe[pelias::gtfs]'
+      'recipe[pelias::default]'
     ]
   end
 end

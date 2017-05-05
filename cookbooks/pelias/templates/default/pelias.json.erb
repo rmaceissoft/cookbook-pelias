@@ -26,6 +26,9 @@
   "logger": {
     "level": "verbose"
   },
+  "api": {
+    "textAnalyzer": "<%= node[:pelias][:api][:text_analyzer] %>"
+  },
   "imports": {
     "adminLookup": {
       "enabled": false
@@ -37,10 +40,6 @@
     "geonames": {
       "datapath": "<%= node[:pelias][:geonames][:data_dir] %>",
       "countryCode": "<%= node[:pelias][:geonames][:country_code] %>"
-    },
-    "quattroshapes": {
-      "datapath": "<%= node[:pelias][:quattroshapes][:data_dir] %>",
-      "adminLookup": <%= node[:pelias][:quattroshapes][:admin_lookup] %>
     },
     "whosonfirst": {
       "datapath": "<%= node[:pelias][:whosonfirst][:data_dir] %>"
@@ -54,8 +53,7 @@
       }]
     },
     "gtfs": {
-      "stopsurl": "<%= node[:pelias][:gtfs][:stops_url] %>",
-      "adminLookup": <%= node[:pelias][:gtfs][:admin_lookup] %>
+      "stopsurl": "<%= node[:pelias][:gtfs][:stops_url] %>"
     }
   },
   "elasticsearch": {
