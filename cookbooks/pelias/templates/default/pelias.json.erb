@@ -10,8 +10,8 @@
       {
         "env": "dev",
         "protocol": "http",
-        "host": "localhost",
-        "port": 9200
+        "host": "<%= node[:pelias][:esclient][:host] %>",
+        "port": <%= node[:pelias][:esclient][:port] %>
       }
     ],
     "log": [{
@@ -31,7 +31,7 @@
   },
   "imports": {
     "adminLookup": {
-      "enabled": false
+      "enabled": <%= node[:pelias][:importers][:admin_lookup] %>
     },
     "openaddresses": {
       "deduplicate": false,

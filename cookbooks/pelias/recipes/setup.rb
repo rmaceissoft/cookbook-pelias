@@ -5,12 +5,22 @@
 
 # dependencies
 include_recipe 'apt::default'
-include_recipe 'java::default'
 include_recipe 'nodejs::nodejs_from_binary'
-include_recipe 'elasticsearch::default'
-# elastic search plugins required by pelias
-elasticsearch_plugin 'analysis-icu' do
-  action :install
+
+
+if node["environment"] == 'development'
+  include_recipe 'java::default'
+  include_recipe 'elasticsearch::default'
+
+  # elastic search plugins required by pelias
+  elasticsearch_plugin 'analysis-icu' do
+    action :install
+  end
+
+  # need to start ES after the initial installation
+  execute 'service elasticsearch start' do
+    not_if 'pgrep -f elasticsearch'
+  end
 end
 
 
@@ -19,18 +29,6 @@ package 'build-essential'
 package 'htop'
 package 'vim'
 
-# libpostal prerequisites
-package 'curl'
-package 'autoconf'
-package 'automake'
-package 'libtool'
-package 'pkg-config'
-
-
-# need to start ES after the initial installation
-execute 'service elasticsearch start' do
-  not_if 'pgrep -f elasticsearch'
-end
 
 # user
 include_recipe 'pelias::user'

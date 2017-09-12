@@ -88,8 +88,9 @@ execute 'import openaddresses data' do
   action  :nothing
   user    node[:pelias][:user][:name]
   cwd     "#{node[:pelias][:basedir]}/openaddresses/current"
-  command 'node import.js'
+  command 'npm start'
   environment(
+    'HOME' => node[:pelias][:user][:home],
     'PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{node[:pelias][:cfg_file]}"
   )
 end

@@ -37,7 +37,7 @@ execute 'node scripts/create_index.js' do
   cwd         "#{node[:pelias][:basedir]}/pelias-schema/current"
   retries     1
   retry_delay 15
-  not_if      "curl -s 'localhost:9200/_cat/indices?v' | grep pelias"
+  not_if      "curl -s '#{node[:pelias][:esclient][:host]}:#{node[:pelias][:esclient][:port]}/_cat/indices?v' | grep pelias"
   only_if     { node[:pelias][:schema][:create_index] == true }
   notifies    :run, 'execute[wipe data]', :immediately
   environment('PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{node[:pelias][:cfg_file]}")
@@ -52,7 +52,7 @@ execute 'wipe data' do
   command <<-EOH
     rm -rf #{node[:pelias][:osm][:data_dir]}/* \
       #{node[:pelias][:geonames][:data_dir]}/* \
-      #{node[:pelias][:quattroshapes][:data_dir]}/* \
+      #{node[:pelias][:whosonfirst][:data_dir]}/* \
       #{node[:pelias][:osm][:leveldb]}/*
   EOH
 end

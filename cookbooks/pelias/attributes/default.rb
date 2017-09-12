@@ -1,3 +1,7 @@
+if node.chef_environment != '_default'
+  default['environment'] = node.chef_environment
+end
+
 include_attribute 'pelias::external'
 
 # env
@@ -18,6 +22,8 @@ default[:pelias][:esclient][:api_version]               = '1.3'
 default[:pelias][:esclient][:max_retries]               = 3
 default[:pelias][:esclient][:dead_timeout]              = 3000
 default[:pelias][:esclient][:max_sockets]               = 20
+default[:pelias][:esclient][:host] = 'localhost'
+default[:pelias][:esclient][:port] = 9200
 
 # api
 default[:pelias][:api][:port]                           = 3100
@@ -103,3 +109,9 @@ default[:pelias][:schema][:create_index]                = false
 default[:pelias][:schema][:replicas]                    = 0
 default[:pelias][:schema][:shards]                      = 1
 default[:pelias][:schema][:concurrency]                 = 24
+
+# global importer settings
+default[:pelias][:importers][:admin_lookup] = true
+
+# nginx
+default[:pelias][:nginx][:server_name] = "pelias.local"
