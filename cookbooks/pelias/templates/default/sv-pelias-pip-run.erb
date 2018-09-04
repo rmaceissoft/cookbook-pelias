@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd <%= node[:pelias][:pip][:deploy_to] %>
+exec 2>&1
+exec chpst -u <%= node[:pelias][:user][:name] %> -e /etc/sv/pelias-pip/env npm start;

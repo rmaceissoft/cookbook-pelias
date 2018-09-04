@@ -27,7 +27,18 @@
     "level": "verbose"
   },
   "api": {
-    "textAnalyzer": "<%= node[:pelias][:api][:text_analyzer] %>"
+    "textAnalyzer": "<%= node[:pelias][:api][:text_analyzer] %>",
+    "services": {
+      "placeholder": {
+        "url": "http://localhost:6100"
+      },
+      "libpostal": {
+        "url": "http://localhost:8080"
+      },
+      "pip": {
+        "url": "http://localhost:3102"
+      }
+    }
   },
   "imports": {
     "adminLookup": {
@@ -42,7 +53,12 @@
       "countryCode": "<%= node[:pelias][:geonames][:country_code] %>"
     },
     "whosonfirst": {
-      "datapath": "<%= node[:pelias][:whosonfirst][:data_dir] %>"
+      "datapath": "<%= node[:pelias][:whosonfirst][:data_dir] %>",
+      "importVenues": false,
+      "importPostalcodes": false,
+      "importPlace": [
+        "102086957"
+      ]
     },
     "openstreetmap": {
       "datapath": "<%= node[:pelias][:osm][:data_dir] %>",

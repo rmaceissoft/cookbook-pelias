@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd <%= node[:pelias][:go_whosonfirst_libpostal][:deploy_to] %>
+exec 2>&1
+exec chpst -u <%= node[:pelias][:user][:name] %> ./bin/wof-libpostal-server

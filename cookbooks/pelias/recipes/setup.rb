@@ -7,6 +7,9 @@
 include_recipe 'apt::default'
 include_recipe 'nodejs::nodejs_from_binary'
 
+# installing python required by node-gyp
+python_runtime '2'
+
 
 if node["environment"] == 'development'
   include_recipe 'java::default'
@@ -74,13 +77,6 @@ end
 
 # address deduper
 directory node[:pelias][:address_deduper][:leveldb] do
-  recursive true
-  owner     node[:pelias][:user][:name]
-  mode      0755
-end
-
-# libpostal
-directory node[:pelias][:libpostal][:data_dir] do
   recursive true
   owner     node[:pelias][:user][:name]
   mode      0755

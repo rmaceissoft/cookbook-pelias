@@ -18,7 +18,7 @@ default[:pelias][:user][:home]                          = '/home/pelias'
 default[:pelias][:esclient][:logdir]                    = '/var/log/esclient'
 default[:pelias][:esclient][:keepalive]                 = true
 default[:pelias][:esclient][:request_timeout]           = 120_000
-default[:pelias][:esclient][:api_version]               = '1.3'
+default[:pelias][:esclient][:api_version]               = '2.4'
 default[:pelias][:esclient][:max_retries]               = 3
 default[:pelias][:esclient][:dead_timeout]              = 3000
 default[:pelias][:esclient][:max_sockets]               = 20
@@ -34,12 +34,34 @@ default[:pelias][:api][:restart_wait]                   = 60
 default[:pelias][:api][:shutdown_timeout]               = 30
 default[:pelias][:api][:text_analyzer]                  = "addressit"
 
+# interpolation
+default[:pelias][:interpolation][:deploy_to]                = "#{node[:pelias][:basedir]}/interpolation"
+default[:pelias][:interpolation][:repository]               = 'https://github.com/pelias/interpolation.git'
+default[:pelias][:interpolation][:revision]                 = 'production'
+default[:pelias][:interpolation][:data_dir]                 = "#{node[:pelias][:basedir]}/data/interpolation"
+
 # libpostal
 default[:pelias][:libpostal][:deploy_to]                = "#{node[:pelias][:basedir]}/libpostal"
 default[:pelias][:libpostal][:repository]               = 'https://github.com/openvenues/libpostal.git'
-default[:pelias][:libpostal][:revision]                 = 'v1.0.0'
+default[:pelias][:libpostal][:revision]                 = 'master'
 default[:pelias][:libpostal][:data_dir]                 = "#{node[:pelias][:basedir]}/data/libpostal"
 
+# pip
+default[:pelias][:pip][:deploy_to]                = "#{node[:pelias][:basedir]}/pip"
+default[:pelias][:pip][:repository]               = 'https://github.com/pelias/pip-service.git'
+default[:pelias][:pip][:revision]                 = 'production'
+default[:pelias][:pip][:port]                     = 3102
+
+# placeholder
+default[:pelias][:placeholder][:deploy_to] = "#{node[:pelias][:basedir]}/placeholder"
+default[:pelias][:placeholder][:repository] = 'https://github.com/pelias/placeholder.git'
+default[:pelias][:placeholder][:revision] = 'production'
+default[:pelias][:placeholder][:port] = 6100
+
+# go_whosonfirst_libpostal
+default[:pelias][:go_whosonfirst_libpostal][:deploy_to]  = "#{node[:pelias][:basedir]}/go_whosonfirst_libpostal"
+default[:pelias][:go_whosonfirst_libpostal][:repository] = 'https://github.com/whosonfirst/go-whosonfirst-libpostal.git'
+default[:pelias][:go_whosonfirst_libpostal][:revision] = 'master'
 
 # address-deduper
 default[:pelias][:address_deduper][:repository]         = 'https://github.com/openvenues/address_deduper'
