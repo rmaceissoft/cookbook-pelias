@@ -23,4 +23,15 @@ execute 'npm install interpolation' do
   environment('HOME' => node[:pelias][:user][:home])
 end
 
+include_recipe 'runit::default'
 
+runit_service 'pelias-interpolation' do
+  action [:enable, :start]
+  log true
+  default_logger  true
+  sv_timeout 60
+  env(
+    'PELIAS_CONFIG' => "#{node[:pelias][:cfg_dir]}/#{node[:pelias][:cfg_file]}",
+    'PORT' => "#{node[:pelias][:interpolation][:port]}"
+  )
+end

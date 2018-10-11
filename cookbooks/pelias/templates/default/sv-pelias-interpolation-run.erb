@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd <%= node[:pelias][:interpolation][:deploy_to] %>
+exec 2>&1
+exec chpst -u <%= node[:pelias][:user][:name] %> -e /etc/sv/pelias-interpolation/env ./interpolate server <%= node[:pelias][:interpolation][:data_dir] %>/address.db <%= node[:pelias][:interpolation][:data_dir] %>/street.db;

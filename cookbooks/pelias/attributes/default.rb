@@ -39,6 +39,7 @@ default[:pelias][:interpolation][:deploy_to]                = "#{node[:pelias][:
 default[:pelias][:interpolation][:repository]               = 'https://github.com/pelias/interpolation.git'
 default[:pelias][:interpolation][:revision]                 = 'production'
 default[:pelias][:interpolation][:data_dir]                 = "#{node[:pelias][:basedir]}/data/interpolation"
+default[:pelias][:interpolation][:port]                     = 3000
 
 # libpostal
 default[:pelias][:libpostal][:deploy_to]                = "#{node[:pelias][:basedir]}/libpostal"
